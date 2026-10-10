@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Her Freedom Ledger — Master Your Money Basics with One Simple Workbook</title>
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg2: #0d1220;
+    --panel: #101726;
+    --panel2: #131b2e;
+    --blue: #1976ff;
+    --blue-soft: rgba(25, 118, 255, .12);
+    --blue-line: rgba(25, 118, 255, .35);
+    --text: #f2f5fa;
+    --muted: #93a0b4;
+    --muted2: #6b7789;
+    --line: rgba(255,255,255,.08);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", "SF Pro Display", -apple-system, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--blue); color: #fff; }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+  section { position: relative; padding: 96px 0; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--blue);
+  }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 12px var(--blue); }
+  h2 { font-size: clamp(2rem, 4.5vw, 3.1rem); line-height: 1.12; letter-spacing: -.02em; font-weight: 800; text-align: center; margin: 14px 0 18px; }
+  .sub { color: var(--muted); text-align: center; max-width: 640px; margin: 0 auto 12px; font-size: 1.05rem; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 15px 30px; border-radius: 14px; border: none; cursor: pointer;
+    font-family: inherit; font-size: 1rem; font-weight: 700; text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 8px 30px rgba(25,118,255,.35); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(25,118,255,.5); }
+  .btn-primary:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .btn-ghost:hover { border-color: var(--blue-line); background: var(--blue-soft); transform: translateY(-2px); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 14, 20, .72);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .wordmark { font-weight: 800; font-size: 1.05rem; letter-spacing: -.01em; color: var(--text); text-decoration: none; }
+  .wordmark span { color: var(--blue); }
+  .nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; transition: color .15s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { padding: 9px 18px; border-radius: 11px; font-size: .88rem; }
+
+  /* HERO */
+  .hero {
+    padding: 168px 0 110px;
+    background:
+      radial-gradient(900px 480px at 50% -80px, rgba(25,118,255,.22), transparent 65%),
+      radial-gradient(1400px 700px at 50% 420px, rgba(10,22,60,.65), transparent 70%),
+      var(--bg);
+    text-align: center;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 16px; border-radius: 999px;
+    background: var(--blue-soft); border: 1px solid var(--blue-line);
+    color: #bcd6ff; font-size: .82rem; font-weight: 600;
+    margin-bottom: 26px;
+  }
+  .pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 10px var(--blue); }
+  h1 {
+    font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+    line-height: 1.05; letter-spacing: -.03em; font-weight: 800;
+    max-width: 900px; margin: 0 auto 22px;
+  }
+  h1 em { font-style: normal; color: var(--blue); }
+  .hero-sub { color: var(--muted); font-size: 1.15rem; max-width: 620px; margin: 0 auto 34px; }
+  .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+  .hero-note { color: var(--muted); font-size: .92rem; margin-bottom: 56px; }
+  .hero-note a { color: var(--blue); text-decoration: none; }
+
+  .media-card {
+    max-width: 960px; margin: 0 auto; position: relative;
+    border-radius: 20px; border: 1px solid var(--line);
+    overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(25,118,255,.08);
+    background: var(--panel);
+  }
+  .media-card img { display: block; width: 100%; }
+  .media-tag {
+    position: absolute; left: 16px; top: 16px;
+    padding: 6px 14px; border-radius: 10px;
+    background: rgba(10,14,20,.78); backdrop-filter: blur(8px);
+    border: 1px solid var(--line); color: #cfe0ff;
+    font-size: .8rem; font-weight: 600;
+  }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; max-width: 960px; margin: 18px auto 0; }
+  .thumb {
+    border-radius: 14px; overflow: hidden; border: 1px solid var(--line);
+    background: var(--panel); transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .thumb:hover { transform: translateY(-5px); border-color: var(--blue-line); box-shadow: 0 14px 40px rgba(25,118,255,.18); }
+  .thumb img { width: 100%; display: block; }
+  .thumb p { padding: 10px 14px 12px; font-size: .82rem; color: var(--muted); font-weight: 600; }
+
+  /* WORKS-WITH STRIP (honest replacement for logo strip) */
+  .strip { padding: 40px 0 8px; text-align: center; }
+  .strip-label { font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted2); font-weight: 600; margin-bottom: 18px; }
+  .strip-pills { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .strip-pill {
+    padding: 9px 20px; border-radius: 999px; font-size: .88rem; font-weight: 600;
+    color: var(--muted); background: var(--panel); border: 1px solid var(--line);
+  }
+
+  /* WHO WE ARE + METRICS */
+  .who { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; align-items: start; padding: 70px 0 30px; }
+  .who .eyebrow { margin-top: 8px; }
+  .who-text p { color: var(--muted); font-size: 1.12rem; margin-bottom: 16px; }
+  .who-text strong { color: var(--text); }
+  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 48px; }
+  .metric {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px 26px; text-align: center;
+    transition: transform .2s, border-color .2s;
+  }
+  .metric:hover { transform: translateY(-4px); border-color: var(--blue-line); }
+  .metric .num { font-size: 2.6rem; font-weight: 800; letter-spacing: -.02em; color: var(--blue); }
+  .metric .lbl { color: var(--muted); font-size: .92rem; margin-top: 6px; }
+
+  /* WHY US */
+  .why { background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 50%, var(--bg) 100%); }
+  .cards6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px 24px;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .card:hover { transform: translateY(-5px); border-color: var(--blue-line); box-shadow: 0 16px 44px rgba(25,118,255,.12); }
+  .card .ico {
+    width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center;
+    background: var(--blue-soft); border: 1px solid var(--blue-line); color: var(--blue);
+    font-size: 1.15rem; margin-bottom: 16px;
+  }
+  .card h3 { font-size: 1.02rem; margin-bottom: 8px; font-weight: 700; }
+  .card p { color: var(--muted); font-size: .92rem; }
+  .why-cta { text-align: center; margin-top: 44px; }
+
+  /* INSIDE (curriculum accordion) */
+  .acc { max-width: 860px; margin: 52px auto 0; }
+  .acc-item { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); margin-bottom: 12px; overflow: hidden; transition: border-color .2s; }
+  .acc-item.active { border-color: var(--blue-line); }
+  .acc-head {
+    width: 100%; display: flex; align-items: center; gap: 18px; padding: 20px 24px;
+    background: none; border: none; cursor: pointer; text-align: left;
+    font-family: inherit; color: var(--text); font-size: 1.02rem; font-weight: 700;
+  }
+  .acc-head:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+  .acc-head .mod { color: var(--muted2); font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; min-width: 92px; }
+  .acc-head .chev { margin-left: auto; color: var(--muted); transition: transform .25s ease, color .2s; font-size: .9rem; }
+  .acc-item.active .chev { transform: rotate(180deg); color: var(--blue); }
+  .acc-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+  .acc-body ul { list-style: none; padding: 4px 24px 22px 44px; }
+  .acc-body li { color: var(--muted); font-size: .94rem; padding: 5px 0; display: flex; gap: 10px; }
+  .acc-body li::before { content: "—"; color: var(--blue); font-weight: 700; }
+  .acc-cta { text-align: center; margin-top: 40px; }
+  .acc-cta .panel-box {
+    display: inline-block; background: var(--panel); border: 1px solid var(--blue-line); border-radius: var(--radius);
+    padding: 28px 40px; box-shadow: 0 0 60px rgba(25,118,255,.08);
+  }
+  .acc-cta p { color: var(--muted); margin-bottom: 16px; }
+
+  /* PREVIEW (student work → real product pages) */
+  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px; }
+  .gitem { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); background: var(--panel); transition: transform .2s, border-color .2s, box-shadow .2s; }
+  .gitem:hover { transform: translateY(-5px); border-color: var(--blue-line); box-shadow: 0 16px 44px rgba(25,118,255,.14); }
+  .gitem img { width: 100%; display: block; }
+  .gitem .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px; background: linear-gradient(transparent, rgba(5,8,14,.92)); }
+  .gitem .cap strong { font-size: .92rem; display: block; }
+  .gitem .cap span { color: var(--muted); font-size: .8rem; }
+  .gallery-cta { text-align: center; margin-top: 40px; }
+
+  /* PRICING */
+  .pricing { background: linear-gradient(180deg, var(--bg), var(--bg2) 60%, var(--bg)); }
+  .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 440px)); gap: 22px; justify-content: center; margin-top: 52px; }
+  .plan {
+    position: relative; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 20px; padding: 34px 30px; display: flex; flex-direction: column;
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+  .plan:hover { transform: translateY(-4px); border-color: var(--blue-line); }
+  .plan.featured { border-color: var(--blue-line); box-shadow: 0 0 70px rgba(25,118,255,.14); background: var(--panel2); }
+  .plan .tag {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--blue); color: #fff; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 999px; white-space: nowrap;
+  }
+  .plan h3 { font-size: 1.2rem; margin-bottom: 4px; }
+  .plan .price { font-size: 2.9rem; font-weight: 800; letter-spacing: -.03em; margin: 12px 0 4px; }
+  .plan .price small { font-size: 1rem; color: var(--muted); font-weight: 500; }
+  .plan .desc { color: var(--muted); font-size: .92rem; margin-bottom: 20px; }
+  .plan ul { list-style: none; margin: 0 0 26px; flex: 1; }
+  .plan li { padding: 8px 0; color: #aeb9ca; font-size: .95rem; display: flex; gap: 10px; }
+  .plan li::before { content: "✓"; color: var(--blue); font-weight: 800; }
+  .plan .btn { width: 100%; }
+  .trust { text-align: center; color: var(--muted); font-size: .88rem; margin-top: 26px; }
+
+  /* PRESENTER (instructor) */
+  .presenter { display: grid; grid-template-columns: 1fr 1.15fr; gap: 56px; align-items: center; }
+  .presenter .photo { border-radius: 20px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(25,118,255,.08); }
+  .presenter .photo img { width: 100%; display: block; }
+  .presenter h2 { text-align: left; }
+  .presenter .sub2 { color: var(--muted); margin: 4px 0 18px; font-size: 1.05rem; }
+  .presenter p.body { color: var(--muted); margin-bottom: 14px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .badge { padding: 8px 16px; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); color: var(--muted); font-size: .84rem; font-weight: 600; }
+
+  /* FAQ */
+  .faq .acc { margin-top: 44px; }
+  .faq-contact { text-align: center; color: var(--muted); margin-top: 30px; font-size: .95rem; }
+  .faq-contact a { color: var(--blue); text-decoration: none; font-weight: 600; }
+
+  /* FINAL CTA */
+  .final {
+    padding: 120px 0; text-align: center;
+    background: radial-gradient(800px 420px at 50% 100%, rgba(25,118,255,.2), transparent 65%), var(--bg);
+  }
+  .final h2 { margin-bottom: 14px; }
+  .final p { color: var(--muted); max-width: 520px; margin: 0 auto 30px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--line); padding: 44px 0 54px; background: #070a10; }
+  .foot { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; align-items: flex-start; }
+  .foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .foot-links a { color: var(--muted); text-decoration: none; font-size: .88rem; }
+  .foot-links a:hover { color: var(--text); }
+  .foot-meta { color: var(--muted2); font-size: .8rem; line-height: 1.7; }
+  .foot-bottom { margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted2); font-size: .78rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  /* SCROLL REVEAL */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .nav-links { display: none; }
+    .who { grid-template-columns: 1fr; gap: 18px; }
+    .cards6 { grid-template-columns: 1fr 1fr; }
+    .metrics { grid-template-columns: 1fr; }
+    .thumbs { grid-template-columns: repeat(3, 1fr); }
+    .gallery { grid-template-columns: 1fr 1fr; }
+    .plans { grid-template-columns: 1fr; }
+    .presenter { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @media (max-width: 640px) {
+    section { padding: 64px 0; }
+    .hero { padding: 130px 0 80px; }
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; }
+    .cards6 { grid-template-columns: 1fr; }
+    .gallery { grid-template-columns: 1fr; }
+    .acc-head { padding: 16px; gap: 10px; }
+    .acc-head .mod { display: none; }
+    .acc-body ul { padding-left: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="#top">Her Freedom <span>Ledger</span></a>
+    <ul class="nav-links">
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#inside">Inside the Kit</a></li>
+      <li><a href="#preview">Preview</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a class="btn btn-primary nav-cta" href="#pricing">Get the Kit</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="pill">Free Snapshot included with every visit</div>
+    <h1>Master your <em>money basics</em> with one simple workbook</h1>
+    <p class="hero-sub">Plan the month, track bills, build a buffer, compare debt-payoff methods and save for goals — in one honest Excel workbook built for real life.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#pricing">Get the Kit — $19</a>
+      <a class="btn btn-ghost" href="#pricing">Try the free Snapshot</a>
+    </div>
+    <p class="hero-note">One-time payment · Instant download · <a href="#pricing">30-day refund</a></p>
+
+    <div class="media-card reveal">
+      <span class="media-tag">Dashboard — where the money goes</span>
+      <img src="assets/kit_p2.png" alt="Freedom Budget Kit Dashboard with charts" loading="lazy">
+    </div>
+    <div class="thumbs">
+      <div class="thumb reveal"><img src="assets/kit_p3.png" alt="Monthly Budget tab" loading="lazy"><p>Monthly Budget</p></div>
+      <div class="thumb reveal"><img src="assets/kit_p4.png" alt="Bills Calendar tab" loading="lazy"><p>Bills Calendar</p></div>
+      <div class="thumb reveal"><img src="assets/kit_p6.png" alt="Debt Payoff tab" loading="lazy"><p>Debt Payoff</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS WITH -->
+<section class="strip">
+  <div class="wrap">
+    <p class="strip-label">Built for</p>
+    <div class="strip-pills">
+      <span class="strip-pill">Microsoft Excel</span>
+      <span class="strip-pill">US examples (USD)</span>
+      <span class="strip-pill">UK examples (GBP)</span>
+      <span class="strip-pill">Changing income</span>
+      <span class="strip-pill">One-time payment</span>
+      <span class="strip-pill">No subscription</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE ARE + METRICS -->
+<section>
+  <div class="wrap">
+    <div class="who">
+      <div><span class="eyebrow">Who We Are</span></div>
+      <div class="who-text">
+        <p><strong>Her Freedom Ledger exists for one reason:</strong> to give women clear, honest numbers about their own money — no jargon, no judgement, no fifty-tab spreadsheets.</p>
+        <p>Every tool we make is built around a simple idea: when you can see your real numbers, you can change them. The workbook below is the tool we wish someone had handed us at the start.</p>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric reveal"><div class="num" data-count="7">0</div><div class="lbl">Connected spreadsheet tools in one workbook</div></div>
+      <div class="metric reveal"><div class="num" data-count="115">0</div><div class="lbl">Formula checks passed against independent arithmetic</div></div>
+      <div class="metric reveal"><div class="num" data-count="2">0</div><div class="lbl">Filled example editions — US and UK</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="wrap">
+    <span class="eyebrow" style="display:block;text-align:center;">Why Us</span>
+    <h2>Real tools. Real numbers.<br>No guesswork.</h2>
+    <p class="sub">This isn't a theory course or a motivational PDF. It's the actual workbook you'll use every month.</p>
+    <div class="cards6">
+      <div class="card reveal"><div class="ico">📊</div><h3>The Real Spreadsheet</h3><p>You get the workbook itself — the same file, formulas and flags, not a screenshot of someone else's.</p></div>
+      <div class="card reveal"><div class="ico">🟡</div><h3>Beginner-Friendly by Design</h3><p>Yellow cells are yours to fill. Green cells calculate and lock themselves. You can't break the maths.</p></div>
+      <div class="card reveal"><div class="ico">📈</div><h3>Plan vs. Actual</h3><p>Set your plan at the start of the month, enter what really happens, and watch the flags show over or under.</p></div>
+      <div class="card reveal"><div class="ico">🔁</div><h3>Built for Changing Income</h3><p>Irregular pay doesn't break this budget. Plan against your lowest month and decide in advance where extra goes.</p></div>
+      <div class="card reveal"><div class="ico">⚖️</div><h3>Debt Payoff, Compared</h3><p>See smallest-balance-first and highest-rate-first side by side — months, interest and debt-free date for each. You choose.</p></div>
+      <div class="card reveal"><div class="ico">💚</div><h3>One-Time $19</h3><p>No subscription, no upsell ladder, no locked features. One payment, one download, yours to keep.</p></div>
+    </div>
+    <div class="why-cta"><a class="btn btn-primary" href="#pricing">Get the Kit — $19</a></div>
+  </div>
+</section>
+
+<!-- INSIDE THE KIT -->
+<section id="inside">
+  <div class="wrap">
+    <span class="eyebrow" style="display:block;text-align:center;">Inside the Kit</span>
+    <h2>Go from overwhelmed<br>to in-control, tab by tab</h2>
+    <p class="sub">Seven connected tools in one workbook. Open each to see what it does.</p>
+    <div class="acc">
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 01</span> Start Here <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>The colour key: yellow for you, green for the maths</li>
+          <li>How to use the workbook in ten minutes</li>
+          <li>What the kit is — and what it honestly isn't</li>
+          <li>Sheet protection with no password, so you stay in control</li>
+        </ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 02</span> Dashboard <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>Every key number on one page — income, essentials, buffer, debt-free dates</li>
+          <li>Planned vs. actual charts that update as you type</li>
+          <li>Where-the-money-goes breakdown at a glance</li>
+          <li>Bills due in the next 30 days, unpaid</li>
+        </ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 03</span> Monthly Budget <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>Income, essentials, wants and saving — planned and actual</li>
+          <li>Over/under status flags that colour themselves red or green</li>
+          <li>Essentials vs. income share, worked out for you</li>
+          <li>"Left to assign" so every dollar has a job</li>
+        </ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 04</span> Bills Calendar <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>List up to 20 bills with amounts and due days</li>
+          <li>Next due date and days-until, computed automatically</li>
+          <li>Mark bills paid and watch the "still to pay" total drop</li>
+          <li>Highlights anything due within a week</li>
+        </ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 05</span> Buffer Planner <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>Your Freedom Number: essentials × the months of cover you choose</li>
+          <li>Months of breathing room you have today</li>
+          <li>Months-to-target at any set-aside amount</li>
+          <li>What-if table at half, double and beyond</li>
+        </ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 06</span> Debt Payoff <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>Enter up to six debts with balance, APR and minimum payment</li>
+          <li>Snowball (smallest first) vs. avalanche (highest rate first)</li>
+          <li>Months to debt-free, debt-free date and total interest — both methods</li>
+          <li>Add an extra monthly payment and watch every result move</li>
+        </ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">Tab 07</span> Savings Goals <span class="chev">▾</span></button>
+        <div class="acc-body"><ul>
+          <li>Up to six goals with target, saved-so-far and target date</li>
+          <li>Months left and needed-per-month, computed per goal</li>
+          <li>Progress bars for every goal</li>
+          <li>Tells you if your planned saving falls short — and by how much</li>
+        </ul></div>
+      </div>
+    </div>
+    <div class="acc-cta reveal">
+      <div class="panel-box">
+        <p>Start today. Download, open, and fill in your first number in ten minutes.</p>
+        <a class="btn btn-primary" href="#pricing">Get the Kit — $19</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW (real product pages) -->
+<section class="pricing" id="preview" style="background:linear-gradient(180deg,var(--bg),var(--bg2) 50%,var(--bg));">
+  <div class="wrap">
+    <span class="eyebrow" style="display:block;text-align:center;">Preview</span>
+    <h2>Real tabs. Real formulas.<br>This is the actual kit.</h2>
+    <p class="sub">Not mockups — these are pages from the workbook itself.</p>
+    <div class="gallery">
+      <div class="gitem reveal"><img src="assets/kit_p3.png" alt="Monthly Budget with status flags" loading="lazy"><div class="cap"><strong>Monthly Budget</strong><span>Planned vs. actual with colour flags</span></div></div>
+      <div class="gitem reveal"><img src="assets/kit_p4.png" alt="Bills Calendar with due dates" loading="lazy"><div class="cap"><strong>Bills Calendar</strong><span>Next due dates, computed</span></div></div>
+      <div class="gitem reveal"><img src="assets/kit_p5.png" alt="Buffer Planner Freedom Number" loading="lazy"><div class="cap"><strong>Buffer Planner</strong><span>Your Freedom Number and months of cover</span></div></div>
+      <div class="gitem reveal"><img src="assets/kit_p6.png" alt="Debt Payoff comparison" loading="lazy"><div class="cap"><strong>Debt Payoff</strong><span>Two methods, side by side</span></div></div>
+      <div class="gitem reveal"><img src="assets/kit_p7.png" alt="Savings Goals with progress bars" loading="lazy"><div class="cap"><strong>Savings Goals</strong><span>Six goals, needed-per-month</span></div></div>
+      <div class="gitem reveal"><img src="assets/kit_p2.png" alt="Dashboard charts" loading="lazy"><div class="cap"><strong>Dashboard</strong><span>The whole month on one page</span></div></div>
+    </div>
+    <div class="gallery-cta"><a class="btn btn-ghost" href="#pricing">Get the Kit — $19</a></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <span class="eyebrow" style="display:block;text-align:center;">Pricing</span>
+    <h2>Choose the plan that fits<br>where you are right now</h2>
+    <p class="sub">Simple and honest: start free, upgrade when you want the whole system.</p>
+    <div class="plans">
+      <div class="plan reveal">
+        <h3>Freedom Snapshot</h3>
+        <div class="price">$0</div>
+        <p class="desc">The one-page starting point. See where you stand today.</p>
+        <ul>
+          <li>Essentials, Freedom Number and months of cover</li>
+          <li>One clean page, ten minutes to fill</li>
+          <li>Blank tab plus US and UK examples</li>
+          <li>Delivered by email</li>
+        </ul>
+        <a class="btn btn-ghost" href="mailto:support@herfreedomledger.com?subject=Freedom%20Snapshot">Get the free Snapshot</a>
+      </div>
+      <div class="plan featured reveal">
+        <span class="tag">Most Popular</span>
+        <h3>Freedom Budget Kit</h3>
+        <div class="price">$19 <small>one-time</small></div>
+        <p class="desc">The complete monthly system — every tab, connected.</p>
+        <ul>
+          <li>All 7 tools: Budget, Bills, Buffer, Debt Payoff, Goals, Dashboard</li>
+          <li>Planned vs. actual tracking with colour flags</li>
+          <li>Snowball vs. avalanche debt comparison</li>
+          <li>Blank template + filled US and UK examples</li>
+          <li>Instant download · yours to keep</li>
+          <li>30-day refund, no questions asked</li>
+        </ul>
+        <a class="btn btn-primary" href="#top">Get the Kit — $19</a>
+      </div>
+    </div>
+    <p class="trust">Secure checkout · Instant access · 30-day refund</p>
+  </div>
+</section>
+
+<!-- PRESENTER -->
+<section id="maya" style="background:linear-gradient(180deg,var(--bg),var(--bg2) 50%,var(--bg));">
+  <div class="wrap">
+    <div class="presenter">
+      <div class="photo reveal"><img src="assets/maya.png" alt="Maya, presenter of Her Freedom Ledger" loading="lazy"></div>
+      <div>
+        <span class="eyebrow">Your Presenter</span>
+        <h2>Meet Maya</h2>
+        <p class="sub2">The voice guiding every Her Freedom Ledger lesson.</p>
+        <p class="body">Maya walks you through each tool the way a good teacher would: one idea at a time, plain words, real numbers on screen. Her style is warm but direct — she assumes you're smart and busy, and she respects both.</p>
+        <p class="body">Every lesson she presents is built on the same rule: show your own numbers, don't preach. If a tool can't earn its place in your month, it doesn't make the kit.</p>
+        <div class="badges">
+          <span class="badge">Hosts every video lesson</span>
+          <span class="badge">One idea at a time</span>
+          <span class="badge">Plain words, no jargon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <span class="eyebrow" style="display:block;text-align:center;">FAQ</span>
+    <h2>Questions people ask<br>before buying</h2>
+    <p class="sub">Straight answers, nothing hidden.</p>
+    <div class="acc">
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">01</span> What do I need to use the kit? <span class="chev">▾</span></button>
+        <div class="acc-body"><ul><li>Microsoft Excel on a desktop computer (365, 2021 or newer)</li><li>That's it — no other software, no accounts</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">02</span> Does it work in Google Sheets or Numbers? <span class="chev">▾</span></button>
+        <div class="acc-body"><ul><li>We haven't tested those, so we won't promise it</li><li>The kit is built and verified for Microsoft Excel</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">03</span> What exactly do I get? <span class="chev">▾</span></button>
+        <div class="acc-body"><ul><li>Three files: the blank workbook, a filled US example, a filled UK example</li><li>Instant download after checkout, yours to keep</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">04</span> Is this financial advice? <span class="chev">▾</span></button>
+        <div class="acc-body"><ul><li>No — it's education and a calculator</li><li>No tax, pension or investment content; those depend on where you live</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">05</span> What if it's not right for me? <span class="chev">▾</span></button>
+        <div class="acc-body"><ul><li>Email support@herfreedomledger.com within 30 days for a full refund</li><li>We reply within 48 hours</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head" aria-expanded="false"><span class="mod">06</span> Will it work in my country? <span class="chev">▾</span></button>
+        <div class="acc-body"><ul><li>The general budgeting, bills, buffer, debt and goals tools work anywhere</li><li>You type amounts in your own currency; examples come in USD and GBP</li></ul></div>
+      </div>
+    </div>
+    <p class="faq-contact">Still have questions? <a href="mailto:support@herfreedomledger.com">support@herfreedomledger.com</a> — we reply within 48 hours.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <h2>Your next level starts here.</h2>
+    <p>One honest number. One clear plan. Download the kit and fill in your first number tonight.</p>
+    <a class="btn btn-primary" href="#pricing">Get the Kit — $19</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="wordmark" href="#top">Her Freedom <span>Ledger</span></a>
+      <div class="foot-links">
+        <a href="#why">Why Us</a>
+        <a href="#inside">Inside the Kit</a>
+        <a href="#preview">Preview</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-meta">
+        Her Freedom Ledger is a trading name of Archway Media<br>
+        12001 Andorra Village, Riyadh, 13241<br>
+        support@herfreedomledger.com · replies within 48 hours
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Archway Media. All rights reserved.</span>
+      <span>General education only — not financial advice.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Accordion (curriculum + FAQ)
+  document.querySelectorAll(".acc-head").forEach(function (head) {
+    head.addEventListener("click", function () {
+      var item = head.parentElement;
+      var body = item.querySelector(".acc-body");
+      var isOpen = item.classList.contains("active");
+      // close others in same accordion group
+      item.parentElement.querySelectorAll(".acc-item.active").forEach(function (o) {
+        o.classList.remove("active");
+        o.querySelector(".acc-body").style.maxHeight = null;
+        o.querySelector(".acc-head").setAttribute("aria-expanded", "false");
+      });
+      if (!isOpen) {
+        item.classList.add("active");
+        body.style.maxHeight = body.scrollHeight + "px";
+        head.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  // Scroll reveal
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+
+  // Number counters
+  var cio = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target, target = parseInt(el.dataset.count, 10), t0 = null;
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min((ts - t0) / 900, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(step); else el.textContent = target;
+      }
+      requestAnimationFrame(step);
+      cio.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll("[data-count]").forEach(function (el) { cio.observe(el); });
+</script>
+</body>
+</html>
