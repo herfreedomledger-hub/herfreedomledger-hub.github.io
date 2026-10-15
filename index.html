@@ -306,7 +306,7 @@
       <a class="btn btn-primary" href="#pricing">Get the Kit — $19</a>
       <a class="btn btn-ghost" href="#pricing">Try the free Snapshot</a>
     </div>
-    <p class="hero-note">One-time payment · Instant download · <a href="#pricing">30-day refund</a></p>
+    <p class="hero-note">One-time payment · Delivered by email · <a href="#pricing">30-day refund</a></p>
 
     <div class="media-card reveal">
       <span class="media-tag">Dashboard — where the money goes</span>
@@ -498,13 +498,13 @@
           <li>Planned vs. actual tracking with colour flags</li>
           <li>Snowball vs. avalanche debt comparison</li>
           <li>Blank template + filled US and UK examples</li>
-          <li>Instant download · yours to keep</li>
+          <li>Delivered by email · yours to keep</li>
           <li>30-day refund, no questions asked</li>
         </ul>
-        <a class="btn btn-primary" href="#top">Get the Kit — $19</a>
+        <a class="btn btn-primary" id="buy-kit-btn" href="javascript:void(0)">Get the Kit — $19</a>
       </div>
     </div>
-    <p class="trust">Secure checkout · Instant access · 30-day refund</p>
+    <p class="trust">Secure checkout · Delivered by email · 30-day refund</p>
   </div>
 </section>
 
@@ -546,7 +546,7 @@
       </div>
       <div class="acc-item">
         <button class="acc-head" aria-expanded="false"><span class="mod">03</span> What exactly do I get? <span class="chev">▾</span></button>
-        <div class="acc-body"><ul><li>Three files: the blank workbook, a filled US example, a filled UK example</li><li>Instant download after checkout, yours to keep</li></ul></div>
+        <div class="acc-body"><ul><li>Three files: the blank workbook, a filled US example, a filled UK example</li><li>Sent to your email after checkout, yours to keep</li></ul></div>
       </div>
       <div class="acc-item">
         <button class="acc-head" aria-expanded="false"><span class="mod">04</span> Is this financial advice? <span class="chev">▾</span></button>
@@ -569,8 +569,8 @@
 <section class="final">
   <div class="wrap">
     <h2>Your next level starts here.</h2>
-    <p>One honest number. One clear plan. Download the kit and fill in your first number tonight.</p>
-    <a class="btn btn-primary" href="#pricing">Get the Kit — $19</a>
+    <p>One honest number. One clear plan. Get the kit and fill in your first number tonight.</p>
+    <a class="btn btn-primary" id="buy-kit-btn-2" href="javascript:void(0)">Get the Kit — $19</a>
   </div>
 </section>
 
@@ -601,6 +601,26 @@
   </div>
 </footer>
 
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  // Paddle checkout — token and price ID are substituted at deploy time
+  var PADDLE_CLIENT_TOKEN = 'live_81c9ef75e3e81816a522c1290a7';
+  var PADDLE_PRICE_ID = 'pri_01m4zgw6zb5grmcx8zb2dd2d2q';
+  if (PADDLE_CLIENT_TOKEN.indexOf('PLACEHOLDER') === -1 && Paddle && Paddle.Initialize) {
+    Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN });
+    function openKitCheckout() {
+      Paddle.Checkout.open({
+        items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }],
+        settings: {
+          successMessage: 'Thank you! Your Freedom Budget Kit is on its way to your inbox.'
+        }
+      });
+    }
+    document.querySelectorAll('#buy-kit-btn, #buy-kit-btn-2').forEach(function (btn) {
+      btn.addEventListener('click', function (e) { e.preventDefault(); openKitCheckout(); });
+    });
+  }
+</script>
 <script>
   // Accordion (curriculum + FAQ)
   document.querySelectorAll(".acc-head").forEach(function (head) {
