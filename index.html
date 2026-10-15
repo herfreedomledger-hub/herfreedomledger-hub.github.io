@@ -610,10 +610,7 @@
     Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN });
     function openKitCheckout() {
       Paddle.Checkout.open({
-        items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }],
-        settings: {
-          successMessage: 'Thank you! Your Freedom Budget Kit is on its way to your inbox.'
-        }
+        items: [{ priceId: PADDLE_PRICE_ID, quantity: 1 }]
       });
     }
     document.querySelectorAll('#buy-kit-btn, #buy-kit-btn-2').forEach(function (btn) {
